@@ -1,3 +1,4 @@
+import jwt_decode from 'jwt-decode';
 import Vue from 'vue';
 import Vuex from 'vuex';
 import proxy from '../services/ProxyService';
@@ -8,11 +9,13 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     posts: [],
-    post: {}
+    post: {},
+    user: {}
   },
   getters: {
     posts: state => { return state.posts },
-    postDetail: state => { return state.post }
+    postDetail: state => { return state.post },
+    user: state => { return state.user }
   },
   actions: {
     getAllPosts({ commit }) {
@@ -71,6 +74,12 @@ export default new Vuex.Store({
         })
         .catch(error => console.log(error))
     },
+    getUser({ commit }) {
+      const token = localStorage.getItem('token');
+      if (token) {
+        commit('getUser', token);
+      }
+    },
   },
   mutations: {
     getPosts(state, posts) {
@@ -105,6 +114,11 @@ export default new Vuex.Store({
     deleteComment(state, id) {
       const comments = state.post.comments.filter(comment => comment._id !== id);
       state.post = { ...state.post, comments: comments };
+    },
+    getUser(state, token) {
+      const decode = jwt_decode(token);
+      const u = Object.assign({}, decode.body);
+      state.user = u;
     },
   }
 })

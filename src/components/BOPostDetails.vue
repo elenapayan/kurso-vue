@@ -5,15 +5,17 @@
       <p>{{postDetail.content}}</p>
       <p>{{postDetail.nickname}}</p>
     </div>
-    <div v-if="postDetail.comments">
+    <div v-if="postDetail.comments && user">
       <ul v-if="postDetail.comments.length > 0">
         Comments:
         <li v-for="comment in postDetail.comments" :key="comment._id">
           <p>{{comment.comment}}</p>
           <p>{{comment.nickname}}</p>
           <small>{{comment.date}}</small>
-          <button type="button" @click="showForm(comment._id)">Edit</button>
-          <button type="button" @click="deleteComment(comment._id)">Delete</button>
+          <div v-if="user.role==='admin' || user._id===comment.authorId">
+            <button type="button" @click="showForm(comment._id)">Edit</button>
+            <button type="button" @click="deleteComment(comment._id)">Delete</button>
+          </div>
         </li>
       </ul>
       <p v-else>
@@ -49,6 +51,7 @@ export default {
     const id = this.$route.params.id;
     this.postId = id;
     this.$store.dispatch("getPostById", id);
+    this.$store.dispatch("getUser");
   },
   data() {
     return {
@@ -79,7 +82,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["postDetail"])
+    ...mapGetters(["postDetail"]),
+    ...mapGetters(["user"])
   }
 };
 </script>

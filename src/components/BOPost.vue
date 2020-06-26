@@ -8,8 +8,10 @@
         <a>
           <router-link :to="{name: 'BOPostDetails', params: {id: post._id}}">More details</router-link>
         </a>
+        <div v-if="user.role==='admin' || user._id===post.authorId">
         <button type="button" @click="showForm(post._id)">Edit</button>
         <button type="button" @click="deletePost(post._id)">Delete</button>
+        </div>
       </li>
     </ul>
     <button type="button" @click="showForm('')">Public post</button>
@@ -43,6 +45,7 @@ export default {
   name: "BOPost",
   beforeMount() {
     this.$store.dispatch("getAllPosts");
+    this.$store.dispatch("getUser");
   },
   data() {
     return {
@@ -71,7 +74,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["posts"])
+    ...mapGetters(["posts"]),
+    ...mapGetters(["user"])
   }
 };
 </script>

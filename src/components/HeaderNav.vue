@@ -3,8 +3,6 @@
     <div>
       <router-link to="/home">Home</router-link>
       <router-link :to="{name:'BackOffice'}">BackOffice</router-link>
-    </div>
-    <div>
       <button @click.prevent="logout()">Logout</button>
     </div>
   </nav>

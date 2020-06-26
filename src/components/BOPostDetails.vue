@@ -33,25 +33,25 @@
         v-if="this.id !== ''"
         @click.prevent="updateComment(comment)"
         type="submit"
-        value="Update post"
+        value="Update comment"
       />
-      <input v-else @click.prevent="saveComment(comment)" type="submit" value="New post" />
+      <input v-else @click.prevent="saveComment(comment)" type="submit" value="New comment" />
     </form>
   </div>
 </template>
 
 <script>
-import proxy from "../services/ProxyService.js";
+import { mapGetters } from "vuex";
 
 export default {
   name: "BOPostDetails",
-  mounted() {
+  beforeMount() {
     const id = this.$route.params.id;
-    this.getPostById(id);
+    this.postId = id;
+    this.$store.dispatch("getPostById", id);
   },
   data() {
     return {
-      postDetail: [],
       comment: {
         comment: "",
         nickname: ""
@@ -61,29 +61,25 @@ export default {
       postId: ""
     };
   },
-  filters: {},
   methods: {
-    getPostById(id) {
-      this.postId = id;
-      proxy.getPostById(this.postId).then(res => {
-        if (res.data) {
-          this.postDetail = res.data;
-        }
-      });
-    },
     saveComment(comment) {
-      proxy.saveComment(this.postId, comment);
+      const id = this.postId;
+      this.$store.dispatch("saveComment", { id, comment });
     },
     updateComment(comment) {
-      proxy.updateComment(this.id, comment);
+      const id = this.id;
+      this.$store.dispatch("updateComment", { id, comment });
     },
     deleteComment(id) {
-      proxy.deleteComment(id);
+      this.$store.dispatch("deleteComment", id);
     },
     showForm(id) {
       this.show = !this.show;
       this.id = id;
     }
+  },
+  computed: {
+    ...mapGetters(["postDetail"])
   }
 };
 </script>

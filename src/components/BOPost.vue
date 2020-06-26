@@ -37,16 +37,15 @@
 </template>
 
 <script>
-import proxy from "../services/ProxyService.js";
+import { mapGetters } from "vuex";
 
 export default {
   name: "BOPost",
-  mounted() {
-    this.getAllPosts();
+  beforeMount() {
+    this.$store.dispatch("getAllPosts");
   },
   data() {
     return {
-      posts: [],
       post: {
         title: "",
         nickname: "",
@@ -57,26 +56,22 @@ export default {
     };
   },
   methods: {
-    getAllPosts() {
-      proxy.getAllPost().then(res => {
-        if (res.status === 200) {
-          this.posts = res.data;
-        }
-      });
-    },
     savePost(post) {
-      proxy.savePost(post);
+      this.$store.dispatch("savePost", post);
     },
     updatePost(id, post) {
-      proxy.updatePost(id, post);
+      this.$store.dispatch("updatePost", { id, post });
     },
     deletePost(id) {
-      proxy.deletePost(id);
+      this.$store.dispatch("deletePost", id);
     },
     showForm(id) {
       this.show = !this.show;
       this.id = id;
     }
+  },
+  computed: {
+    ...mapGetters(["posts"])
   }
 };
 </script>

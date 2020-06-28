@@ -1,13 +1,12 @@
 <template>
   <div>
-    <ul v-if="posts">
+    <ul v-if="posts" class="post-list">
       <li v-for="post in posts" :key="post._id">
-        <h3>{{post.title}}</h3>
-        <p>{{post.content}}</p>
-        <p>{{post.nickname}}</p>
-        <a>
-          <router-link :to="{name: 'PostDetails', params: {id: post._id}}">More details</router-link>
-        </a>
+        <post-card :title1.prop="post.title" :text1.prop="post.content" :text2.prop="post.nickname">
+          <button-more slot="btn" text="More Details" @clickPost="onTap(navToDetails(post._id))">
+            <!-- <router-link :to="{name: 'PostDetails', params: {id: post._id}}">More Details</router-link> -->
+          </button-more>
+        </post-card>
       </li>
     </ul>
   </div>
@@ -33,24 +32,28 @@ export default {
           this.posts = res.data;
         }
       });
+    },
+    navToDetails(id) {
+      this.$router.push({
+        name: "PostDetails",
+        params: {
+          id: id
+        }
+      });
     }
   }
 };
 </script>
-
 <style scoped>
-h3 {
-  margin: 40px 0 0;
+.post-list {
+  padding: 70px 0 0 0;
+  min-height: 95vh;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+post-card {
+  display: flex;
+  flex-direction: column;
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+button-more {
+  align-self: flex-end;
 }
 </style>

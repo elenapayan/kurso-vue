@@ -6,23 +6,36 @@
 </template>
 
 <script>
-import HeaderNav from './HeaderNav.vue'
+import HeaderNav from "./HeaderNav.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     HeaderNav
   }
-}
+};
 </script>
 
 <style>
-#app {
+/* #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+} */
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+ul {
+  margin: 0;
+  padding: 0;
+}
+li {
+  list-style-type: none;
 }
 </style>

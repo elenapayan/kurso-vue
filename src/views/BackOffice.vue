@@ -1,6 +1,11 @@
 <template>
   <div>
-    <router-view></router-view>
+    <div>
+      <router-view></router-view>
+    </div>
+    <div slot="footer">
+      <post-footer name="Elena Payán"></post-footer>
+    </div>
   </div>
 </template>
 

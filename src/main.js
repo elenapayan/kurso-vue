@@ -6,7 +6,6 @@ import store from './store/index.js';
 
 
 Vue.config.productionTip = false;
-
 Vue.config.ignoredElements = [
   'button-more',
   'layout-home',

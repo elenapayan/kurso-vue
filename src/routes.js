@@ -18,7 +18,7 @@ function guardRoute(to, from, next) {
 }
 
 const routes = [
-  { path: '/', redirect: '/home' },
+  { path: '/', name: 'Home', redirect: '/home' },
   {
     path: '/home', component: Home, children: [
       { path: '', component: Post },

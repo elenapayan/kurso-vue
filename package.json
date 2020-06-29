@@ -12,6 +12,8 @@
     "core-js": "^3.6.5",
     "jwt-decode": "^2.2.0",
     "kurso-st": "file:../kurso-st",
+    "primeicons": "^4.0.0",
+    "primevue": "^2.0.0-rc.1",
     "vue": "^2.6.11",
     "vue-router": "^3.3.4",
     "vuex": "^3.4.0"

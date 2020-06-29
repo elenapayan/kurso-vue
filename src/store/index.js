@@ -10,7 +10,7 @@ export default new Vuex.Store({
   state: {
     posts: [],
     post: {},
-    user: {}
+    user: []
   },
   getters: {
     posts: state => { return state.posts },
@@ -80,6 +80,10 @@ export default new Vuex.Store({
         commit('getUser', token);
       }
     },
+    logout({ commit }) {
+      localStorage.removeItem("token");
+      commit('logout');
+    }
   },
   mutations: {
     getPosts(state, posts) {
@@ -118,8 +122,11 @@ export default new Vuex.Store({
     getUser(state, token) {
       const decode = jwt_decode(token);
       const u = Object.assign({}, decode.body);
-      state.user = u;
+      state.user = [u];
     },
+    logout(state) {
+      state.user = [];
+    }
   }
 })
 

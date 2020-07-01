@@ -63,7 +63,7 @@ export default {
   justify-content: flex-start;
   align-items: center;
   flex-direction: column;
-  min-height: 82vh;
+  min-height: 95vh;
   padding: 70px 0 0 0;
 }
 .post-detail-card h4 {
